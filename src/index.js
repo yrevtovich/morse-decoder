@@ -38,8 +38,39 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    const lettersArr = expr.match(/.{10}/g);
+    
+    const decodedLettersArr = lettersArr.map((item) => {
+        switch (item) {
+            case '**********': 
+                return ' ';
+            default: 
+                return decodeLetter(item);  
+        }
+    });
+
+    return decodedLettersArr.join('');
 }
+
+function decodeLetter(letter) {
+    const letterCodeArr = letter.match(/.{2}/g);
+
+    const letterMorseCodeArr = letterCodeArr.map((code) => {
+        switch(code) {
+            case '10': 
+                return '.';  
+            case '11': 
+                return '-';
+            default:
+                return '';
+        }
+    });
+
+    const letterMorseCode = letterMorseCodeArr.join('');
+
+    return MORSE_TABLE[letterMorseCode];
+}
+
 
 module.exports = {
     decode
